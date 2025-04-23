@@ -1,0 +1,47 @@
+<div class="w-75 mt-2 mx-auto">
+  <form nz-form [formGroup]="filterForm">
+    <div class="row">
+      <div class="col-8">
+        <nz-form-item>
+          <nz-form-label>Thời gian</nz-form-label>
+          <nz-form-control>
+            <nz-range-picker formControlName="range" class="w-100"></nz-range-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div class="col-3">
+        <nz-form-item>
+          <nz-form-label>Nhóm theo</nz-form-label>
+          <nz-form-control>
+            <nz-select nzShowSearch formControlName="groupBy" [nzAllowClear]="true" nzPlaceHolder="Chọn nhóm">
+              <nz-option *ngFor="let item of types" [nzValue]="item.id" [nzLabel]="item.name"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div class="col-1">
+        <button nz-button nzType="primary" type="submit" class="w-100" [disabled]="!filterForm.valid"
+          (click)="onLoc()">Lọc</button>
+      </div>
+    </div>
+  </form>
+
+  <div>
+    <nz-tabset>
+      <nz-tab nzTitle="Doanh thu">
+        <app-revenue [revenue]="revenue"></app-revenue>
+      </nz-tab>
+      <nz-tab nzTitle="Số lượng đơn">
+        <app-order-stats [orderStats]="orderStats"></app-order-stats>
+      </nz-tab>
+      <nz-tab nzTitle="Top sản phẩm bán chạy">
+        <app-top-products [topProducts]="topProducts"></app-top-products>
+      </nz-tab>
+      <nz-tab nzTitle="Tổng quan">
+        <app-overview [overview]="overview"></app-overview>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+</div>

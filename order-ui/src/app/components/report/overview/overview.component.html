@@ -1,0 +1,7 @@
+<div class="w-100 d-flex flex-column gap-2">
+  <span><strong>Ngày:</strong> {{ overview.date | date: 'dd/MM/yyyy' }}</span>
+  <span><strong>Doanh thu:</strong> {{ overview.totalRevenue | formatVND }}</span>
+  <span><strong>Số lượng đơn hàng:</strong> {{ overview.totalOrders }}</span>
+  <span><strong>Số lượng khách hàng:</strong> {{ overview.totalCustomers }}</span>
+  <span><strong>Trung bình doanh thu:</strong> {{ overview.averageOrderValue | formatVND }}</span>
+</div>

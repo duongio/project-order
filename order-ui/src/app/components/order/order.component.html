@@ -1,0 +1,57 @@
+<!-- <div class="container d-flex flex-column align-items-center">
+  <div class="fs-3 fw-bold text-center mb-4 text-primary">Đơn Đặt Hàng</div>
+
+  <div *ngIf="product" class="card shadow-lg p-4" style="max-width: 700px; width: 100%; border-radius: 12px;">
+    <div class="row g-4 align-items-center">
+      <div class="col-md-3">
+        <img [src]="product.image" alt="Ảnh sản phẩm" class="img-fluid rounded border"
+          style="object-fit: cover; width: 100%;" />
+      </div>
+
+      <div class="col-md-9 d-flex flex-column justify-content-between h-100">
+        <div class="mb-3">
+          <h5 class="fw-bold text-dark">{{ product.name }}</h5>
+          <div class="text-muted small mb-1">Danh mục: {{ product.category }}</div>
+          <div class="text-success fs-5 fw-semibold">{{ product.price | formatVND }}</div>
+        </div>
+
+      </div>
+
+      <div class="d-flex justify-content-center align-items-center">
+        <button nz-button nzType="primary" class="me-2" (click)="onPIN()">Xác nhận thanh toán</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="container d-flex flex-column align-items-center position-relative">
+
+  <!-- Overlay loading -->
+  <div *ngIf="isLoading" class="loading-overlay d-flex justify-content-center align-items-center">
+    <nz-icon nzType="loading" nzTheme="outline" [nzSpin]="true" class="fs-1 text-primary"></nz-icon>
+  </div>
+
+  <div class="fs-3 fw-bold text-center mb-4 text-primary">Đơn Đặt Hàng</div>
+
+  <div *ngIf="product" class="card shadow-lg p-4" [class.loading-blur]="isLoading"
+    style="max-width: 700px; width: 100%; border-radius: 12px;">
+    <div class="row g-4 align-items-center">
+      <div class="col-md-3">
+        <img [src]="product.image" alt="Ảnh sản phẩm" class="img-fluid rounded border"
+          style="object-fit: cover; width: 100%;" />
+      </div>
+
+      <div class="col-md-9 d-flex flex-column justify-content-between h-100">
+        <div class="mb-3">
+          <h5 class="fw-bold text-dark">{{ product.name }}</h5>
+          <div class="text-muted small mb-1">Danh mục: {{ product.category }}</div>
+          <div class="text-success fs-5 fw-semibold">{{ product.price | formatVND }}</div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center align-items-center">
+        <button nz-button nzType="primary" class="me-2" (click)="onPIN()">Xác nhận thanh toán</button>
+      </div>
+    </div>
+  </div>
+</div>

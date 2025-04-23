@@ -1,0 +1,9 @@
+<div>
+  <label for="pinInput">Nhập mã PIN:</label>
+  <input id="pinInput" type="password" nz-input [(ngModel)]="pinValue" maxlength="4"
+    style="width: 100%; margin-top: 8px;" placeholder="••••••" />
+  <div style="text-align: right; margin-top: 16px;">
+    <button nz-button nzType="default" class="mx-2" (click)="onCancel()">Hủy</button>
+    <button nz-button nzType="primary" class="me-2 mt-3" (click)="onSubmit()">Gửi</button>
+  </div>
+</div>

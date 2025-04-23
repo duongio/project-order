@@ -1,0 +1,149 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+  postgres-order:
+    image: postgres
+    environment:
+      POSTGRES_DB: OrderDbService
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: duongpt250
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "OrderDbService"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+  postgres-payment:
+    image: postgres
+    environment:
+      POSTGRES_DB: PaymentDbService
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: duongpt250
+    ports:
+      - "5434:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "PaymentDbService"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+  postgres-report:
+    image: postgres
+    environment:
+      POSTGRES_DB: ReportDbService
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: duongpt250
+    ports:
+      - "5435:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "ReportDbService"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+  order-service:
+    build:
+      context: .
+      dockerfile: OrderService.WebAPI/Dockerfile
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres-order:
+        condition: service_healthy
+    environment:
+      ConnectionStrings__DefaultConnection: "Host=postgres-order;Username=postgres;Password=duongpt250;Database=OrderDbService"
+      RabbitMQ__Host: rabbitmq
+    ports:
+      - "5001:80"
+    command: ["./wait-for-it.sh", "rabbitmq:5672", "--", "dotnet", "OrderService.WebAPI.dll"]
+    networks:
+      - app-network
+
+  payment-service:
+    build:
+      context: .
+      dockerfile: PaymentService.WebAPI/Dockerfile
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres-payment:
+        condition: service_healthy
+    environment:
+      ConnectionStrings__DefaultConnection: "Host=postgres-payment;Username=postgres;Password=duongpt250;Database=PaymentDbService"
+      RabbitMQ__Host: rabbitmq
+    ports:
+      - "5002:80"
+    command: ["./wait-for-it.sh", "rabbitmq:5672", "--", "dotnet", "PaymentService.WebAPI.dll"]
+    networks:
+      - app-network
+
+  report-service:
+    build:
+      context: .
+      dockerfile: ReportService.WebAPI/Dockerfile
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres-report:
+        condition: service_healthy
+    environment:
+      ConnectionStrings__DefaultConnection: "Host=postgres-report;Username=postgres;Password=duongpt250;Database=ReportDbService"
+      RabbitMQ__Host: rabbitmq
+    ports:
+      - "5003:80"
+    command: ["./wait-for-it.sh", "rabbitmq:5672", "--", "dotnet", "ReportService.WebAPI.dll"]
+    networks:
+      - app-network
+
+  api-gateway:
+    container_name: api-gateway
+    build:
+      context: .
+      dockerfile: ApiGatewayOcelot/Dockerfile
+    ports:
+      - "8000:80"
+    depends_on:
+      - order-service
+      - payment-service
+      - report-service
+    networks:
+      - app-network
+
+  angular:
+    container_name: angular
+    build:
+      context: ../order-ui
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - api-gateway
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

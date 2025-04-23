@@ -1,0 +1,25 @@
+<div class="container my-2 d-flex flex-column align-items-center" *ngIf="!showDetail; else detail">
+  <div class="fs-3 fw-bold text-center mb-4 text-primary">Product List</div>
+  <div class="products-list mt-3">
+    <ng-container *ngFor="let item of products">
+      <div class="item-product" (click)="goToDetail(item)">
+        <div>
+          <img [src]="item.image" alt="Ảnh sản phẩm" class="w-100 h-100" />
+        </div>
+        <div class="d-flex flex-column justify-content-between align-items-start w-100">
+          <span class="fs-5 fw-bold">{{item.name}}</span>
+          <span class="fs-6 fw-semibold text-success">{{ item.price | formatVND }}</span>
+          <div class="d-flex justify-content-between align-items-center w-100">
+            <span class="text-muted">{{item.category}}</span>
+            <span class="text-warning">{{item.rating}} <nz-icon nzType="star" nzTheme="fill" /></span>
+          </div>
+        </div>
+        <button nz-button nzType="primary" (click)="goToOrder(item)">Mua ngay</button>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #detail>
+  <app-product-detail [productDetail]="productDetail" (dataEmitter)="getDataEmitter($event)"></app-product-detail>
+</ng-template>

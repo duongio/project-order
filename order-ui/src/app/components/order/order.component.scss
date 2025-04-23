@@ -1,0 +1,34 @@
+::ng-deep .custom-modal .ant-modal-content {
+  background-color: #f0f9ff;
+}
+
+::ng-deep .custom-modal .ant-modal-header {
+  background-color: #1890ff;
+  color: white;
+}
+
+::ng-deep .custom-modal .ant-modal-footer .ant-btn-primary {
+  background-color: #52c41a;
+  border-color: #52c41a;
+}
+
+::ng-deep .custom-modal .ant-modal-footer .ant-btn-default {
+  color: #f5222d;
+  border-color: #f5222d;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 10;
+}
+
+.loading-blur {
+  pointer-events: none;
+  opacity: 0.5;
+  filter: blur(1px);
+}

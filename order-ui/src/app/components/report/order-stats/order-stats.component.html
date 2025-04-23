@@ -1,0 +1,14 @@
+<nz-table [nzData]="orderStats" [nzBordered]="true" [nzSize]="'middle'">
+  <thead>
+    <tr>
+      <th>Ngày</th>
+      <th>Số lượng đơn</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of orderStats">
+      <td>{{ item.date | date: 'dd/MM/yyyy' }}</td>
+      <td>{{ item.orderCount }}</td>
+    </tr>
+  </tbody>
+</nz-table>

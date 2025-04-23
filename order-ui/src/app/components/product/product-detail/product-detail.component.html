@@ -1,0 +1,39 @@
+<div class="container d-flex flex-column align-items-center">
+  <div class="fs-3 fw-bold text-center mb-4 text-primary">Chi Tiết Sản Phẩm</div>
+
+  <div *ngIf="productDetail" class="card shadow p-4" style="max-width: 700px; width: 100%;">
+    <span>
+      <nz-icon nzType="arrow-left" nzTheme="outline" (click)="goBack()" style="cursor: pointer;" />
+    </span>
+
+    <div class="row g-4 mt-1">
+      <div class="col-md-5">
+        <img [src]="productDetail.image" alt="Ảnh sản phẩm" class="img-fluid rounded"
+          style="object-fit: cover; height: 100%; max-height: 300px;" />
+      </div>
+
+      <div class="col-md-7 d-flex flex-column justify-content-between">
+        <div>
+          <h5 class="fw-bold">{{ productDetail.name }}</h5>
+          <p class="text-muted mb-2">{{ productDetail.category }}</p>
+          <p class="fs-5 fw-semibold text-success">{{ productDetail.price | formatVND }}</p>
+
+          <div class="mb-2">
+            <span class="text-warning">
+              <nz-icon nzType="star" nzTheme="fill"></nz-icon> {{ productDetail.rating }}
+            </span>
+          </div>
+        </div>
+
+        <div>
+          <button nz-button nzType="primary" class="me-2" (click)="goToOrder(productDetail)">Mua ngay</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <h6 class="fw-bold">Mô tả</h6>
+      <p class="text-secondary">{{ productDetail.description }}</p>
+    </div>
+  </div>
+</div>

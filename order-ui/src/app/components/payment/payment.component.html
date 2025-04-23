@@ -1,0 +1,26 @@
+<nz-card nzTitle="Lịch sử thanh toán" [nzBordered]="false">
+  <nz-table [nzData]="paymentList" [nzBordered]="true" [nzSize]="'middle'" [nzLoading]="isLoading">
+    <thead>
+      <tr>
+        <th>STT</th>
+        <th>Mã giao dịch</th>
+        <th>Ngày thanh toán</th>
+        <th>Số tiền</th>
+        <th>Trạng thái</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let payment of paymentList; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ payment.id }}</td>
+        <td>{{ payment.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ payment.amount | formatVND }}</td>
+        <td>
+          <nz-tag [nzColor]="getStatusColor(payment.status)">
+            {{ payment.status }}
+          </nz-tag>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>

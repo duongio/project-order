@@ -1,0 +1,14 @@
+<nz-table [nzData]="revenue" [nzBordered]="true" [nzSize]="'middle'">
+  <thead>
+    <tr>
+      <th>Ngày</th>
+      <th>Doanh thu</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of revenue">
+      <td>{{ item.date | date: 'dd/MM/yyyy' }}</td>
+      <td>{{ item.totalRevenue | number:'1.0-0' }} đ</td>
+    </tr>
+  </tbody>
+</nz-table>

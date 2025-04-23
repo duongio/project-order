@@ -1,0 +1,16 @@
+<nz-table [nzData]="topProducts" [nzBordered]="true" [nzSize]="'middle'">
+  <thead>
+    <tr>
+      <th>Id sản phẩm</th>
+      <th>Số lượng sản phẩm</th>
+      <th>Doanh thu sản phẩm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of topProducts">
+      <td>{{ item.productId }}</td>
+      <td>{{ item.quantitySold }}</td>
+      <td>{{ item.totalRevenue | number:'1.0-0' }} đ</td>
+    </tr>
+  </tbody>
+</nz-table>
