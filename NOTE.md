@@ -63,3 +63,5 @@ Tổng kết có 2 Exchange:
 
 
 Phần giả lập thanh toán em tạm hardcode mã PIN là 1111, mục đích để khi client nhập sai mã PIN sẽ tạo sự kiện thanh toán thất bại với status là Failed.
+
+Link Docker Hub: https://hub.docker.com/r/duongio/project-order
